@@ -1,9 +1,5 @@
-/* ==========================================================================
-   Narendhiran R — Portfolio Stylesheet
-   ========================================================================== */
 
 :root {
-  /* Colors */
   --bg: #08090b;
   --surface: #101216;
   --surface2: #15171c;
@@ -12,14 +8,9 @@
   --accent: #b9ff3d;
   --line: #292c33;
 
-  /* Fonts */
   --font: 'Inter', sans-serif;
   --display: 'Space Grotesk', sans-serif;
 }
-
-/* ==========================================================================
-   Reset & base
-   ========================================================================== */
 
 * {
   box-sizing: border-box;
@@ -53,7 +44,6 @@ em {
   color: var(--accent);
 }
 
-/* Soft background glows behind the page content */
 .glow {
   position: fixed;
   width: 500px;
@@ -76,7 +66,6 @@ em {
   left: -200px;
 }
 
-/* Shared label style used above section headings */
 .eyebrow,
 .section-label {
   font-size: 10px;
@@ -90,10 +79,6 @@ em {
   margin: auto;
   padding: 110px 28px;
 }
-
-/* ==========================================================================
-   Navigation
-   ========================================================================== */
 
 .nav {
   height: 78px;
@@ -145,10 +130,6 @@ em {
   color: white;
   font-size: 24px;
 }
-
-/* ==========================================================================
-   Hero
-   ========================================================================== */
 
 .hero {
   min-height: calc(100vh - 78px);
@@ -233,9 +214,6 @@ h1 {
 .quick-links a:hover {
   color: var(--accent);
 }
-
-/* --- Hero visual: the "code card" with floating badges --- */
-
 .hero-card-wrap {
   display: flex;
   justify-content: center;
@@ -343,10 +321,6 @@ h1 {
   display: block;
 }
 
-/* ==========================================================================
-   Scrolling tech marquee
-   ========================================================================== */
-
 .marquee {
   border-block: 1px solid var(--line);
   padding: 18px 0;
@@ -370,10 +344,6 @@ h1 {
 @keyframes move {
   to { transform: translateX(-30%); }
 }
-
-/* ==========================================================================
-   About / Skills / Projects — shared two-column heading layout
-   ========================================================================== */
 
 .about-grid,
 .skills-heading,
@@ -399,10 +369,6 @@ h1 {
   max-width: 430px;
 }
 
-/* ==========================================================================
-   About
-   ========================================================================== */
-
 .about p {
   color: var(--muted);
   font-size: 14px;
@@ -427,11 +393,6 @@ h1 {
   text-transform: uppercase;
   letter-spacing: 1.5px;
 }
-
-/* ==========================================================================
-   Skills
-   ========================================================================== */
-
 .skill-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -499,10 +460,6 @@ h1 {
   background: var(--accent);
 }
 
-/* ==========================================================================
-   Projects
-   ========================================================================== */
-
 .project-head {
   margin-bottom: 45px;
 }
@@ -539,7 +496,6 @@ h1 {
   z-index: 2;
 }
 
-/* Project 1 — Portfolio: mock browser window */
 .ecommerce {
   background: radial-gradient(circle at 60% 40%, #334126, #11140e);
 }
@@ -568,7 +524,6 @@ h1 {
   left: 28px;
 }
 
-/* Project 2 — Weather dashboard: little bar chart */
 .dashboard {
   background: radial-gradient(circle at 70% 30%, #252a40, #101116);
 }
@@ -605,7 +560,6 @@ h1 {
   font: 10px monospace;
 }
 
-/* Project 3 — Expense tracker: mini summary card */
 .expense-art {
   background: radial-gradient(circle at 55% 40%, #4b3517, #0b111a 68%);
 }
@@ -726,10 +680,6 @@ h1 {
   color: var(--accent);
 }
 
-/* ==========================================================================
-   Experience
-   ========================================================================== */
-
 .experience-card {
   margin-top: 35px;
   border-block: 1px solid var(--line);
@@ -767,10 +717,6 @@ h1 {
   font-size: 30px;
   color: var(--accent);
 }
-
-/* ==========================================================================
-   Contact
-   ========================================================================== */
 
 .contact {
   padding-bottom: 80px;
@@ -845,10 +791,6 @@ h1 {
   color: var(--accent);
 }
 
-/* ==========================================================================
-   Footer
-   ========================================================================== */
-
 footer {
   max-width: 1240px;
   margin: auto;
@@ -860,10 +802,6 @@ footer {
   color: #66686e;
   letter-spacing: .5px;
 }
-
-/* ==========================================================================
-   Responsive breakpoints
-   ========================================================================== */
 
 @media (max-width: 1000px) {
   .project-grid {
