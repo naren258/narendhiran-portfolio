@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Narendhiran R — Frontend Developer portfolio">
+  <title>Narendhiran R | Frontend Developer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Decorative background glows -->
+  <div class="glow glow-one"></div>
+  <div class="glow glow-two"></div>
+
+  <!-- ===== Navigation ===== -->
+  <header class="nav">
+    <a class="logo" href="#home">NR<span>.</span></a>
+    <button class="menu-btn" aria-label="Open menu">☰</button>
+    <nav id="navLinks">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Let's Talk ↗</a>
+  </header>
+
+  <main>
+
+    <!-- ===== Hero ===== -->
+    <section class="hero section" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow"><span></span> AVAILABLE FOR FRESHER ROLES</div>
+        <h1>Building clean,<br><em>modern web</em><br>experiences.</h1>
+        <p class="hero-text">
+          Hi, I'm <strong>Narendhiran R</strong> — a Frontend Developer focused on
+          responsive interfaces, React.js and REST API integration.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#projects">View My Work <span>↗</span></a>
+          <a class="btn ghost" href="resume.pdf">Download Resume <span>↓</span></a>
+        </div>
+        <div class="quick-links">
+          <a href="mailto:narendhiran258@gmail.com">narendhiran258@gmail.com</a>
+          <a href="https://www.linkedin.com/in/narendhiran-ramkumar-502165329?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          <a href="https://github.com/naren258" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </div>
+
+      <!-- Hero visual: profile photo + animated "code card" -->
+      <div class="hero-card-wrap">
+        <div class="profile-photo">
+          <img src="profile.png" alt="Narendhiran R profile photo">
+        </div>
+        <div class="hero-card">
+          <div class="card-top">
+            <span>frontend.dev</span>
+            <span>01 / 04</span>
+          </div>
+          <div class="code-art">
+            <div class="code-line"><i>const</i> developer = {</div>
+            <div class="code-line indent">name: <b>"Narendhiran"</b>,</div>
+            <div class="code-line indent">role: <b>"Frontend Developer"</b>,</div>
+            <div class="code-line indent">stack: [<b>"React"</b>, <b>"JS"</b>, <b>"REST"</b>]</div>
+            <div class="code-line">};</div>
+            <div class="terminal-line"><span>›</span> building digital experiences<span class="cursor"></span></div>
+          </div>
+          <div class="floating-badge badge-react">React.js</div>
+          <div class="floating-badge badge-api">REST API</div>
+          <div class="floating-badge badge-js">JS</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Scrolling tech marquee ===== -->
+    <section class="marquee">
+      <div>HTML5 <span>✦</span> CSS3 <span>✦</span> JAVASCRIPT <span>✦</span> REACT.JS <span>✦</span> REST API <span>✦</span> GIT <span>✦</span> RESPONSIVE UI <span>✦</span></div>
+    </section>
+
+    <!-- ===== About ===== -->
+    <section class="section about" id="about">
+      <div class="section-label">01 — ABOUT</div>
+      <div class="about-grid">
+        <div>
+          <h2>Turning ideas into <em>usable interfaces.</em></h2>
+        </div>
+        <div>
+          <p>I'm a B.Tech Information Technology graduate with a strong foundation in JavaScript (ES6+), React.js, HTML5 and CSS3.</p>
+          <p>I enjoy building component-based, responsive interfaces and connecting them to REST APIs to create dynamic web experiences. I'm a fresher eager to contribute to real-world, production-level projects.</p>
+          <div class="stats">
+            <div><strong>7.81</strong><span>CGPA</span></div>
+            <div><strong>React</strong><span>Core Stack</span></div>
+            <div><strong>REST</strong><span>API Integration</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Skills ===== -->
+    <section class="section" id="skills">
+      <div class="section-label">02 — SKILLS</div>
+      <div class="skills-heading">
+        <h2>My <em>toolkit.</em></h2>
+        <p>Technologies I use to design, build and connect modern web interfaces.</p>
+      </div>
+
+      <div class="skill-grid">
+        <article class="skill-card featured">
+          <span class="skill-no">01</span>
+          <div class="skill-icon">⚛</div>
+          <h3>React.js</h3>
+          <p>Component-based UI, React Hooks and application state.</p>
+          <div class="meter"><span style="width:88%"></span></div>
+        </article>
+
+        <article class="skill-card">
+          <span class="skill-no">02</span>
+          <div class="skill-icon">&lt;/&gt;</div>
+          <h3>JavaScript</h3>
+          <p>ES6+ fundamentals and interactive web experiences.</p>
+          <div class="meter"><span style="width:84%"></span></div>
+        </article>
+
+        <article class="skill-card">
+          <span class="skill-no">03</span>
+          <div class="skill-icon">#</div>
+          <h3>HTML & CSS</h3>
+          <p>Semantic markup, layouts and responsive styling.</p>
+          <div class="meter"><span style="width:92%"></span></div>
+        </article>
+
+        <article class="skill-card">
+          <span class="skill-no">04</span>
+          <div class="skill-icon">↯</div>
+          <h3>REST APIs</h3>
+          <p>Fetching and displaying dynamic data in web apps.</p>
+          <div class="meter"><span style="width:82%"></span></div>
+        </article>
+
+        <article class="skill-card">
+          <span class="skill-no">05</span>
+          <div class="skill-icon">⌘</div>
+          <h3>Git & GitHub</h3>
+          <p>Version control and collaborative development workflow.</p>
+          <div class="meter"><span style="width:76%"></span></div>
+        </article>
+
+        <article class="skill-card">
+          <span class="skill-no">06</span>
+          <div class="skill-icon">◇</div>
+          <h3>Figma / UI</h3>
+          <p>UI design awareness and translating designs to code.</p>
+          <div class="meter"><span style="width:72%"></span></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== Projects ===== -->
+    <section class="section projects" id="projects">
+      <div class="section-label">03 — PROJECTS</div>
+      <div class="project-head">
+        <h2>My <em>projects.</em></h2>
+        <p>Explore the projects I built using modern frontend technologies and responsive UI practices.</p>
+      </div>
+
+      <div class="project-grid">
+
+        <!-- Project 1: Personal Portfolio -->
+        <article class="project-card">
+          <a href="projects/portfolio.html" class="project-visual ecommerce" aria-label="Open Personal Portfolio Website">
+            <span>01</span>
+            <div class="mock-window">
+              <div></div><div></div><div></div>
+              <b>PORTFOLIO /</b>
+            </div>
+          </a>
+          <div class="project-info">
+            <div class="project-content">
+              <span class="project-tech">HTML · CSS · JavaScript · Responsive UI</span>
+              <h3>Personal Portfolio Website</h3>
+              <p>A responsive personal portfolio website designed to showcase my skills, experience, education and frontend development projects.</p>
+            </div>
+            <a class="project-arrow" href="projects/portfolio.html" aria-label="Open Personal Portfolio Website">↗</a>
+          </div>
+        </article>
+
+        <!-- Project 2: Weather Dashboard -->
+        <article class="project-card">
+          <a href="projects/weather.html" class="project-visual dashboard" aria-label="Open Weather Dashboard">
+            <span>02</span>
+            <div class="chart"><i></i><i></i><i></i><i></i><i></i></div>
+            <b>WEATHER</b>
+          </a>
+          <div class="project-info">
+            <div class="project-content">
+              <span class="project-tech">React.js · REST API · JavaScript</span>
+              <h3>Weather Dashboard</h3>
+              <p>A weather dashboard concept that uses a clean interface to display weather information from a REST API based on the selected city.</p>
+            </div>
+            <a class="project-arrow" href="projects/weather.html" aria-label="Open Weather Dashboard">↗</a>
+          </div>
+        </article>
+
+        <!-- Project 3: Expense Tracker -->
+        <article class="project-card">
+          <a href="projects/expense.html" class="project-visual expense-art" aria-label="Open Expense Tracker">
+            <span>03</span>
+            <div class="expense-card">
+              <small>MONTHLY OVERVIEW</small>
+              <strong>₹12,450</strong>
+              <span>Total expenses</span>
+              <div class="expense-row"><i><em></em></i><label>Food</label><label>₹4,200</label></div>
+              <div class="expense-row"><i><em></em></i><label>Travel</label><label>₹3,100</label></div>
+              <div class="expense-row"><i><em></em></i><label>Other</label><label>₹2,150</label></div>
+            </div>
+          </a>
+          <div class="project-info">
+            <div class="project-content">
+              <span class="project-tech">HTML · CSS · JavaScript · Local Storage</span>
+              <h3>Expense Tracker</h3>
+              <p>A simple expense management interface for adding expenses, viewing totals and organizing personal spending in a clear layout.</p>
+            </div>
+            <a class="project-arrow" href="projects/expense.html" aria-label="Open Expense Tracker">↗</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===== Experience ===== -->
+    <section class="section experience" id="experience">
+      <div class="section-label">04 — EXPERIENCE</div>
+      <div class="experience-card">
+        <div class="exp-date">APR 2025</div>
+        <div class="exp-main">
+          <span>INTERNSHIP</span>
+          <h2>Full Stack Developer Intern</h2>
+          <h3>Brand Infotech · Onsite</h3>
+          <p>Worked on web applications using front-end and back-end technologies, including UI design, APIs and database management. Strengthened coding, problem-solving and teamwork skills while contributing to real projects.</p>
+        </div>
+        <div class="exp-mark">↗</div>
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section class="section contact" id="contact">
+      <div class="contact-box">
+        <div class="section-label">05 — CONTACT</div>
+        <h2>Let's build something<br><em>great together.</em></h2>
+        <p>Looking for a fresher opportunity where I can learn, contribute and grow as a Frontend Developer.</p>
+        <a class="email-link" href="mailto:narendhiran258@gmail.com">narendhiran258@gmail.com <span>↗</span></a>
+        <a class="phone-link" href="tel:+919080206386">+91 90802 06386 <span>↗</span></a>
+        <div class="socials">
+          <a href="https://www.linkedin.com/in/narendhiran-ramkumar-502165329?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          <a href="https://github.com/naren258" target="_blank" rel="noreferrer">GitHub ↗</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>© 2026 Narendhiran R</span>
+    <span>Designed & built with HTML · CSS · JS</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
