@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weather Dashboard | Narendhiran R</title>
+
+  <style>
+    /* ---------- basic page setup ---------- */
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #080d14;
+      color: #edf5ff;
+      font-family: Arial, sans-serif;
+      padding: 24px 0;
+    }
+
+    .card {
+      width: min(900px, 88%);
+      background: #101923;
+      border: 1px solid #26384b;
+      border-radius: 18px;
+      padding: 45px;
+      box-shadow: 0 30px 80px #0008;
+      box-sizing: border-box;
+    }
+
+    .badge { color: #35a7ff; font-size: 11px; letter-spacing: 2px; font-weight: bold; }
+    .back { color: #8ea2b8; text-decoration: none; font-size: 12px; }
+    .back:hover { color: #35a7ff; }
+
+    h1 { font-size: clamp(40px, 7vw, 76px); margin: 20px 0 10px; }
+    h1 em { color: #35a7ff; font-style: normal; }
+    p { color: #98a8ba; line-height: 1.8; max-width: 650px; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 25px 0; }
+    .tags span {
+      border: 1px solid #294058;
+      padding: 7px 11px;
+      border-radius: 20px;
+      color: #9fc8ea;
+      font-size: 10px;
+    }
+
+    /* ---------- demo box ---------- */
+    .demo {
+      margin-top: 30px;
+      padding: 25px;
+      background: #0b121b;
+      border: 1px solid #26384b;
+      border-radius: 12px;
+    }
+
+    .search-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .demo input,
+    .demo button {
+      padding: 11px;
+      border-radius: 6px;
+      border: 1px solid #31465d;
+      background: #111d29;
+      color: white;
+      font-size: 14px;
+    }
+
+    .demo input { flex: 1 1 200px; min-width: 0; }
+    .demo button { cursor: pointer; }
+    .demo button:hover { opacity: 0.85; }
+
+    .demo .search-btn {
+      background: #35a7ff;
+      color: #07111a;
+      font-weight: bold;
+      border-color: #35a7ff;
+    }
+
+    #message { margin: 14px 0 0; min-height: 22px; font-size: 14px; }
+    #message.error { color: #ff8a8a; }
+
+    /* ---------- weather result ---------- */
+    #result { display: none; margin-top: 20px; }
+    #result.visible { display: block; }
+
+    .today { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+    .today-icon { font-size: 60px; }
+    .today-temp { font-size: 52px; font-weight: bold; }
+    .city-name { font-size: 20px; font-weight: bold; }
+    .condition { color: #98a8ba; font-size: 14px; }
+
+    .details, .forecast {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .details  { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); }
+    .forecast { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
+
+    .box {
+      background: #111d29;
+      border: 1px solid #26384b;
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .box small { color: #8ea2b8; display: block; font-size: 12px; margin-bottom: 4px; }
+
+    .day-box { text-align: center; }
+    .day-box .icon { font-size: 28px; margin: 6px 0; }
+    .day-box .low { color: #8ea2b8; }
+
+    @media (max-width: 520px) {
+      .card { padding: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <a class="back" href="../index.html#projects">← Back to Portfolio</a>
+
+    <div class="badge">NARENDHIRAN R · PROJECT</div>
+    <h1>Weather <em>Dashboard</em></h1>
+    <p>
+      A weather dashboard that shows live conditions and a 5-day forecast
+      for any city. Built to practice working with REST APIs and showing
+      the data on the page.
+    </p>
+
+    <div class="tags">
+      <span>Open-Meteo API</span>
+      <span>REST API</span>
+      <span>JavaScript</span>
+      <span>CSS</span>
+    </div>
+
+    <div class="demo">
+      <h3>Weather Dashboard Demo</h3>
+
+      <div class="search-row">
+        <input id="cityInput" type="text" placeholder="Enter city, e.g. Chennai">
+        <button id="searchBtn" class="search-btn">Search</button>
+        <button id="locationBtn">My location</button>
+        <button id="unitBtn">°C</button>
+      </div>
+
+      <p id="message"></p>
+
+      <div id="result">
+        <div class="today">
+          <div class="today-icon" id="icon"></div>
+          <div>
+            <div class="city-name" id="cityName"></div>
+            <div class="condition" id="condition"></div>
+          </div>
+          <div class="today-temp" id="temp"></div>
+        </div>
+
+        <div class="details">
+          <div class="box"><small>Feels like</small><b id="feels"></b></div>
+          <div class="box"><small>Humidity</small><b id="humidity"></b></div>
+          <div class="box"><small>Wind</small><b id="wind"></b></div>
+        </div>
+
+        <div class="forecast" id="forecast"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // This uses the free Open-Meteo API (no API key needed)
+    // 1. geocoding API: city name -> latitude and longitude
+    // 2. forecast API: latitude and longitude -> weather data
+    const geoUrl = "https://geocoding-api.open-meteo.com/v1/search";
+    const weatherUrl = "https://api.open-meteo.com/v1/forecast";
+
+    // the API gives a weather code (number), this turns it into text + emoji
+    const weatherCodes = {
+      0: ["Clear sky", "☀️"],
+      1: ["Mostly clear", "🌤️"],
+      2: ["Partly cloudy", "⛅"],
+      3: ["Overcast", "☁️"],
+      45: ["Fog", "🌫️"],
+      48: ["Fog", "🌫️"],
+      51: ["Light drizzle", "🌦️"],
+      53: ["Drizzle", "🌦️"],
+      55: ["Heavy drizzle", "🌧️"],
+      61: ["Light rain", "🌦️"],
+      63: ["Rain", "🌧️"],
+      65: ["Heavy rain", "🌧️"],
+      71: ["Light snow", "🌨️"],
+      73: ["Snow", "🌨️"],
+      75: ["Heavy snow", "❄️"],
+      80: ["Rain showers", "🌦️"],
+      81: ["Rain showers", "🌧️"],
+      82: ["Heavy showers", "⛈️"],
+      95: ["Thunderstorm", "⛈️"],
+      96: ["Thunderstorm with hail", "⛈️"],
+      99: ["Thunderstorm with hail", "⛈️"]
+    };
+
+    // grabbing the elements I need from the page
+    const cityInput = document.getElementById("cityInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const locationBtn = document.getElementById("locationBtn");
+    const unitBtn = document.getElementById("unitBtn");
+    const message = document.getElementById("message");
+    const result = document.getElementById("result");
+
+    let unit = "celsius";   // can be "celsius" or "fahrenheit"
+    let currentPlace = null; // remembers the last city so the unit button can reload it
+
+    function getWeatherInfo(code) {
+      // if the code is not in my list, show a default
+      return weatherCodes[code] || ["Unknown", "🌡️"];
+    }
+
+    function showMessage(text, isError) {
+      message.textContent = text;
+      message.className = isError ? "error" : "";
+    }
+
+    // step 1: find the city
+    async function searchCity() {
+      const city = cityInput.value.trim();
+
+      if (city === "") {
+        showMessage("Please type a city name first.", true);
+        return;
+      }
+
+      showMessage("Searching...");
+
+      try {
+        const response = await fetch(geoUrl + "?name=" + encodeURIComponent(city) + "&count=1");
+        const data = await response.json();
+
+        if (!data.results) {
+          result.classList.remove("visible");
+          showMessage("City not found. Check the spelling and try again.", true);
+          return;
+        }
+
+        const place = data.results[0];
+        currentPlace = {
+          name: place.name + ", " + place.country,
+          lat: place.latitude,
+          lon: place.longitude
+        };
+
+        getWeather();
+      } catch (error) {
+        showMessage("Something went wrong. Check your internet and try again.", true);
+      }
+    }
+
+    // step 2: get the weather for the saved place
+    async function getWeather() {
+      showMessage("Loading weather...");
+
+      const url = weatherUrl +
+        "?latitude=" + currentPlace.lat +
+        "&longitude=" + currentPlace.lon +
+        "&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,weather_code" +
+        "&daily=weather_code,temperature_2m_max,temperature_2m_min" +
+        "&forecast_days=5&timezone=auto" +
+        "&temperature_unit=" + unit;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        showWeather(data);
+        showMessage("");
+      } catch (error) {
+        showMessage("Could not load the weather. Please try again.", true);
+      }
+    }
+
+    // step 3: put the data on the page
+    function showWeather(data) {
+      const symbol = unit === "celsius" ? "°C" : "°F";
+      const now = data.current;
+      const info = getWeatherInfo(now.weather_code);
+
+      document.getElementById("icon").textContent = info[1];
+      document.getElementById("condition").textContent = info[0];
+      document.getElementById("cityName").textContent = currentPlace.name;
+      document.getElementById("temp").textContent = Math.round(now.temperature_2m) + symbol;
+      document.getElementById("feels").textContent = Math.round(now.apparent_temperature) + symbol;
+      document.getElementById("humidity").textContent = now.relative_humidity_2m + "%";
+      document.getElementById("wind").textContent = Math.round(now.wind_speed_10m) + " km/h";
+
+      // 5 day forecast
+      let forecastHtml = "";
+
+      for (let i = 0; i < data.daily.time.length; i++) {
+        const date = new Date(data.daily.time[i] + "T00:00:00");
+        const dayName = i === 0 ? "Today" : date.toLocaleDateString("en-US", { weekday: "short", day: "numeric" });
+        const dayInfo = getWeatherInfo(data.daily.weather_code[i]);
+        const high = Math.round(data.daily.temperature_2m_max[i]);
+        const low = Math.round(data.daily.temperature_2m_min[i]);
+
+        forecastHtml +=
+          '<div class="box day-box">' +
+            "<small>" + dayName + "</small>" +
+            '<div class="icon">' + dayInfo[1] + "</div>" +
+            "<div>" + high + symbol + ' <span class="low">' + low + symbol + "</span></div>" +
+          "</div>";
+      }
+
+      document.getElementById("forecast").innerHTML = forecastHtml;
+      result.classList.add("visible");
+    }
+
+    // use the browser location instead of typing a city
+    function useMyLocation() {
+      if (!navigator.geolocation) {
+        showMessage("Your browser does not support location.", true);
+        return;
+      }
+
+      showMessage("Getting your location...");
+
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          currentPlace = {
+            name: "Your location",
+            lat: position.coords.latitude,
+            lon: position.coords.longitude
+          };
+          getWeather();
+        },
+        function () {
+          showMessage("Location is blocked. Allow it in the browser or search by city.", true);
+        }
+      );
+    }
+
+    // switch between Celsius and Fahrenheit
+    function changeUnit() {
+      unit = unit === "celsius" ? "fahrenheit" : "celsius";
+      unitBtn.textContent = unit === "celsius" ? "°C" : "°F";
+
+      if (currentPlace) {
+        getWeather();
+      }
+    }
+
+    // button clicks
+    searchBtn.addEventListener("click", searchCity);
+    locationBtn.addEventListener("click", useMyLocation);
+    unitBtn.addEventListener("click", changeUnit);
+
+    // pressing Enter also searches
+    cityInput.addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        searchCity();
+      }
+    });
+  </script>
+</body>
+</html>

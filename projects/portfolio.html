@@ -1,0 +1,116 @@
+<a class="back" href="../index.html">← Back to Portfolio</a><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personal Portfolio Website | Narendhiran R</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+      background: #0b1220;
+      color: #eef4ff;
+      font-family: Arial, sans-serif;
+    }
+
+    .wrap {
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .card {
+      background: #111c2f;
+      border: 1px solid #243553;
+      border-radius: 22px;
+      padding: 40px;
+    }
+
+    .tag {
+      color: #66b3ff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: clamp(32px, 6vw, 58px);
+      margin: 12px 0;
+    }
+
+    p {
+      color: #aab9cf;
+      line-height: 1.7;
+    }
+
+    .links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 14px;
+      margin: 28px 0;
+    }
+
+    .links a {
+      display: block;
+      padding: 18px;
+      border: 1px solid #2a3c5c;
+      border-radius: 14px;
+      background: #0d1728;
+      color: #fff;
+      text-decoration: none;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .links a:hover {
+      border-color: #66b3ff;
+      transform: translateY(-2px);
+    }
+
+    .tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .tech span {
+      background: #182840;
+      border-radius: 20px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: #c8d7eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="tag">PROJECT 01 · PERSONAL PORTFOLIO</div>
+      <h1>Personal Portfolio Website</h1>
+      <p>
+        A responsive developer portfolio built to showcase my frontend skills,
+        experience, education and projects. This portfolio is also the main
+        hub connecting all three project demos.
+      </p>
+
+      <div class="links">
+        <a class="back"href="../index.html">🏠 Main Portfolio</a>
+        <a href="weather.html">☁️ Weather Dashboard</a>
+        <a href="expense.html">💰 Expense Tracker</a>
+      </div>
+
+      <div class="tech">
+        <span>HTML5</span>
+        <span>CSS3</span>
+        <span>JavaScript</span>
+        <span>Responsive UI</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

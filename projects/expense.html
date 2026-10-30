@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Expense Tracker | Narendhiran R</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  /* colors in one place so they are easy to change (green theme from paste 2) */
+  :root {
+    --background: #b8e4d7;
+    --surface: #edf4dc;
+    --field: #e1edcf;
+    --line: #c4d6bb;
+    --text: #20352c;
+    --muted: #60766a;
+    --accent: #28775e;
+    --danger: #b8402f;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #a5ded3 0%, var(--background) 48%, #d4e7b6 100%);
+    color: var(--text);
+    font-family: "DM Sans", "Segoe UI", Arial, sans-serif;
+    line-height: 1.5;
+  }
+
+  /* the one overall box */
+  main {
+    width: min(900px, calc(100% - 40px));
+    margin: 40px auto;
+    padding: 32px;
+    border: 1px solid #d5e4c5;
+    border-radius: 8px;
+    background: var(--surface);
+    box-shadow: 0 18px 48px #245a4930;
+  }
+
+  /* 1. back link with arrow */
+  .back {
+    display: inline-block;
+    margin-bottom: 40px;
+    color: var(--muted);
+    font-size: 13px;
+    text-decoration: none;
+  }
+
+  .back:hover,
+  .back:focus-visible {
+    color: var(--accent);
+  }
+
+  /* 2. heading */
+  .eyebrow {
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 8px 0;
+    font-size: clamp(36px, 8vw, 58px);
+    font-family: "Manrope", "Segoe UI", sans-serif;
+    line-height: 1.08;
+  }
+
+  /* 3. intro text */
+  .intro {
+    max-width: 560px;
+    margin: 0;
+    color: var(--muted);
+  }
+
+  /* 4. skills / technologies used */
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin: 22px 0 32px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  /* 5. horizontal line under the header */
+  .tracker {
+    border-top: 1px solid var(--line);
+    padding-top: 24px;
+  }
+
+  h2 {
+    margin: 0 0 12px 0;
+    font-size: 18px;
+    font-family: "Manrope", "Segoe UI", sans-serif;
+  }
+
+  /* 2 columns: form on left, chart on right */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .panel {
+    background: var(--field);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 16px;
+  }
+
+  label {
+    display: block;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  input, select, button {
+    min-height: 44px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font: inherit;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 0 12px;
+    margin-top: 4px;
+    background: var(--surface);
+    color: var(--text);
+  }
+
+  button {
+    width: 100%;
+    padding: 0 16px;
+    background: var(--accent);
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  input:focus-visible, select:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .total-label {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .total {
+    font-size: 28px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 8px;
+  }
+
+  #pie {
+    display: block;
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    margin: 0 auto 12px auto;
+  }
+
+  .legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .legend li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 14px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+
+  .amount-text {
+    margin-left: auto;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 10px 6px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  th {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .right {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .delete {
+    width: auto;
+    min-height: 34px;
+    padding: 0 10px;
+    background: transparent;
+    color: var(--danger);
+    font-size: 13px;
+    font-weight: 400;
+  }
+
+  .empty {
+    text-align: center;
+    padding: 20px 0;
+    color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
+    main {
+      width: min(100% - 32px, 900px);
+      margin: 16px auto;
+      padding: 22px 18px;
+    }
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+
+<body>
+<main>
+  <!-- 1. back link with arrow -->
+  <a class="back" href="../index.html#projects">&larr; Back to Portfolio</a>
+
+  <header>
+    <!-- 2. heading -->
+    <div class="eyebrow">Narendhiran R · Project</div>
+    <h1>Expense tracker</h1>
+
+    <!-- 3. intro -->
+    <p class="intro">A simple way to record everyday spending and keep track of your total.</p>
+
+    <!-- 4. skills used -->
+    <div class="tags" aria-label="Technologies used">
+      <span>HTML</span>
+      <span>CSS</span>
+      <span>JavaScript</span>
+      <span>Local Storage</span>
+    </div>
+  </header>
+
+  <!-- 5. line + app -->
+  <section class="tracker">
+    <div class="grid">
+      <!-- form -->
+      <div class="panel">
+        <h2>Add expense</h2>
+
+        <form id="expenseForm">
+          <label>Description
+            <input id="desc" placeholder="e.g. Lunch" required>
+          </label>
+
+          <label>Amount
+            <input id="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required>
+          </label>
+
+          <label>Category
+            <select id="category">
+              <option>Food</option>
+              <option>Transport</option>
+              <option>Shopping</option>
+              <option>Bills</option>
+              <option>Health</option>
+              <option>Other</option>
+            </select>
+          </label>
+
+          <button id="addBtn" type="submit">Add expense</button>
+        </form>
+      </div>
+
+      <!-- pie chart -->
+      <div class="panel">
+        <h2>Spending by category</h2>
+        <span class="total-label">Total spent</span>
+        <div class="total" id="total">₹0.00</div>
+        <canvas id="pie" width="280" height="280"></canvas>
+        <ul class="legend" id="legend"></ul>
+      </div>
+    </div>
+
+    <!-- table of expenses -->
+    <h2>All expenses</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Category</th>
+          <th class="right">Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="list"></tbody>
+    </table>
+  </section>
+</main>
+
+<script>
+  // load saved expenses (if there are none, start with an empty list)
+  var expenses = [];
+  try {
+    expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+  } catch (e) {
+    expenses = [];
+  }
+
+  // colors for the pie slices
+  var colors = {
+    Food: "#df8b42",
+    Transport: "#7185c5",
+    Shopping: "#c65e61",
+    Bills: "#a2873f",
+    Health: "#28775e",
+    Other: "#8a9a94"
+  };
+
+  var descInput = document.getElementById("desc");
+  var amountInput = document.getElementById("amount");
+  var categoryInput = document.getElementById("category");
+  var expenseForm = document.getElementById("expenseForm");
+  var list = document.getElementById("list");
+  var totalText = document.getElementById("total");
+  var legend = document.getElementById("legend");
+  var canvas = document.getElementById("pie");
+  var ctx = canvas.getContext("2d");
+
+  descInput.addEventListener("input", function () {
+    descInput.setCustomValidity("");
+  });
+
+  // 50 -> ₹50.00
+  function formatMoney(number) {
+    return "₹" + number.toFixed(2);
+  }
+
+  function saveData() {
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+  }
+
+  expenseForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var description = descInput.value.trim();
+    var amount = parseFloat(amountInput.value);
+    var category = categoryInput.value;
+
+    if (description === "" || isNaN(amount) || amount <= 0) {
+      descInput.setCustomValidity(description === "" ? "Please fill out this field." : "");
+      descInput.reportValidity();
+      return;
+    }
+    descInput.setCustomValidity("");
+
+    expenses.push({ desc: description, amount: amount, category: category });
+
+    saveData();
+    showAll();
+
+    descInput.value = "";
+    amountInput.value = "";
+    descInput.focus();
+  });
+
+  // Delete button inside the table
+  list.addEventListener("click", function (event) {
+    var index = event.target.getAttribute("data-index");
+    if (index !== null) {
+      expenses.splice(index, 1);
+      saveData();
+      showAll();
+    }
+  });
+
+  // draws the pie chart + legend
+  function drawPie() {
+    var centerX = canvas.width / 2;
+    var centerY = canvas.height / 2;
+    var radius = centerX - 8;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    legend.innerHTML = "";
+
+    var totals = {};
+    var sum = 0;
+
+    for (var i = 0; i < expenses.length; i++) {
+      var cat = expenses[i].category;
+      if (totals[cat] === undefined) {
+        totals[cat] = 0;
+      }
+      totals[cat] += expenses[i].amount;
+      sum += expenses[i].amount;
+    }
+
+    // no expenses yet: empty dotted circle
+    if (sum === 0) {
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = "#60766a";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 6]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      return;
+    }
+
+    var startAngle = -Math.PI / 2; // start from the top
+
+    for (var category in totals) {
+      var value = totals[category];
+      var sliceAngle = (value / sum) * Math.PI * 2;
+
+      ctx.beginPath();
+      ctx.moveTo(centerX, centerY);
+      ctx.arc(centerX, centerY, radius, startAngle, startAngle + sliceAngle);
+      ctx.closePath();
+      ctx.fillStyle = colors[category] || "#999999";
+      ctx.fill();
+
+      // thin line between slices
+      ctx.strokeStyle = "#e1edcf";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      startAngle += sliceAngle;
+
+      var percent = Math.round((value / sum) * 100);
+      var li = document.createElement("li");
+
+      var dot = document.createElement("span");
+      dot.className = "dot";
+      dot.style.background = colors[category] || "#999999";
+
+      var name = document.createElement("span");
+      name.textContent = category;
+
+      var amountText = document.createElement("span");
+      amountText.className = "amount-text";
+      amountText.textContent = formatMoney(value) + " (" + percent + "%)";
+
+      li.appendChild(dot);
+      li.appendChild(name);
+      li.appendChild(amountText);
+      legend.appendChild(li);
+    }
+  }
+
+  // updates the total, the table and the chart
+  function showAll() {
+    var total = 0;
+    list.innerHTML = "";
+
+    for (var i = 0; i < expenses.length; i++) {
+      var item = expenses[i];
+      total += item.amount;
+
+      var row = document.createElement("tr");
+
+      var descCell = document.createElement("td");
+      descCell.textContent = item.desc;
+
+      var catCell = document.createElement("td");
+      catCell.textContent = item.category;
+
+      var amountCell = document.createElement("td");
+      amountCell.className = "right";
+      amountCell.textContent = formatMoney(item.amount);
+
+      var deleteCell = document.createElement("td");
+      deleteCell.className = "right";
+      deleteCell.innerHTML = "<button class='delete' data-index='" + i + "'>Delete</button>";
+
+      row.appendChild(descCell);
+      row.appendChild(catCell);
+      row.appendChild(amountCell);
+      row.appendChild(deleteCell);
+      list.appendChild(row);
+    }
+
+    totalText.textContent = formatMoney(total);
+    drawPie();
+  }
+
+  showAll();
+</script>
+</body>
+</html>
